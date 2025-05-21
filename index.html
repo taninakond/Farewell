@@ -2,26 +2,47 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Farewell</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Farewell Videos</title>
     <style>
         body {
             margin: 0;
             padding: 0;
             background-color: #000000d4;
+            font-family: Arial, sans-serif;
             display: flex;
-            justify-content: center;
+            flex-direction: column;
             align-items: center;
-            width: 100vw;
-            height: 100vh;
+            min-height: 100vh;
         }
+
+        .tabs {
+            display: flex;
+            margin-top: 1rem;
+            gap: 1rem;
+        }
+
+        .tab {
+            padding: 0.5rem 1rem;
+            background-color: #222;
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: background-color 0.3s;
+        }
+
+        .tab.active {
+            background-color: #444;
+        }
+
         .video-container {
             position: relative;
-            width: 100%;
+            width: 90%;
             max-width: 1024px;
-            margin: 2rem auto;
-            padding-top: 0;
+            margin: 2rem auto 1rem;
             border-radius: 12px;
             overflow: hidden;
             box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
@@ -37,15 +58,64 @@
             height: 100%;
             border: none;
         }
+
+        .download-button {
+            padding: 0.6rem 1.4rem;
+            background-color: #1976d2;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            margin-bottom: 2rem;
+            transition: background-color 0.3s;
+        }
+
+        .download-button:hover {
+            background-color: #125aa0;
+        }
     </style>
 </head>
 
 <body>
+
+    <div class="tabs">
+        <button class="tab" onclick="switchVideo(1)">Trailer video</button>
+        <button class="tab active" onclick="switchVideo(0)">Farewell programme</button>
+    </div>
+
     <div class="video-container">
-        <iframe src="https://drive.google.com/file/d/1hbcnSfv8EiKzVkR5SLs4q_ejQqQ5_Q8E/preview"
-            allow="autoplay; fullscreen" allowfullscreen>
+        <iframe id="videoFrame" src="https://drive.google.com/file/d/1hbcnSfv8EiKzVkR5SLs4q_ejQqQ5_Q8E/preview"
+            allow="autoplay; fullscreen" allowfullscreen loading="lazy">
         </iframe>
     </div>
+
+    <a id="downloadLink" class="download-button"
+        href="https://drive.google.com/uc?export=download&id=1hbcnSfv8EiKzVkR5SLs4q_ejQqQ5_Q8E" target="_blank"
+        download>
+        Download Video
+    </a>
+
+    <script>
+        const videoData = [
+            {
+                preview: "https://drive.google.com/file/d/1hbcnSfv8EiKzVkR5SLs4q_ejQqQ5_Q8E/preview",
+                download: "https://drive.google.com/uc?export=download&id=1hbcnSfv8EiKzVkR5SLs4q_ejQqQ5_Q8E"
+            },
+            {
+                preview: "https://drive.google.com/file/d/1hplVZjmmhAnmqKjmEenK_o1FKDjWw1ax/preview", // Replace with real preview URL
+                download: "https://drive.google.com/uc?export=download&id=1hplVZjmmhAnmqKjmEenK_o1FKDjWw1ax" // Replace with real ID
+            }
+        ];
+
+        function switchVideo(index) {
+            document.getElementById("videoFrame").src = videoData[index].preview;
+            document.getElementById("downloadLink").href = videoData[index].download;
+
+            document.querySelectorAll(".tab").forEach((tab, i) => {
+                tab.classList.toggle("active", i === index);
+            });
+        }
+    </script>
 
 </body>
 
